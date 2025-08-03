@@ -1,0 +1,76 @@
+body {
+    font-family: Arial, sans-serif;
+    background: url('../images/background.jpg.webp') no-repeat center center fixed;
+    background-size: cover;
+    margin: 0;
+    padding: 0;
+    color: #333;
+    text-align: center;
+}
+
+.announcement-bar {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.logo-container {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.logo {
+    width: 200px; /* Adjust size */
+    display: block;
+    margin: 0 auto;
+}
+
+h1 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.content {
+    padding: 20px;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    margin-top: 50px;
+}
+
+.box {
+    width: 300px;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.button {
+    display: block;
+    background: #4CAF50;
+    color: white;
+    padding: 10px;
+    text-decoration: none;
+    margin: 5px 0;
+    border-radius: 5px;
+}
+
+.button:hover {
+    background: #45a049;
+}
+
+footer {
+    background-color: #333;
+    color: white;
+    padding: 10px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}

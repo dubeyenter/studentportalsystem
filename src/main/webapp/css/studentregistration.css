@@ -1,0 +1,105 @@
+/* Basic Page Styling */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: url("../images/background.jpg.webp") no-repeat center center fixed;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 90vh;
+}
+
+/* Registration Form Container */
+.registration-form-container {
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    width: 100%;
+    height: auto;
+}
+
+/* Header Styling */
+header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+header img {
+    width: 100px;
+    margin-bottom: 10px;
+}
+
+/* Form Title */
+.form-title {
+    text-align: center;
+    font-size: 26px;
+    margin-bottom: 30px;
+}
+
+/* Form Groups */
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 16px;
+    margin-bottom: 8px;
+}
+
+/* Input Fields */
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.form-group input[type="date"] {
+    cursor: not-allowed;
+    background-color: #f9f9f9;
+}
+
+.form-group .readonly {
+    background-color: #f9f9f9;
+    color: #555;
+    border: none;
+}
+
+/* Submit Button */
+.btn-submit {
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px 20px;
+    font-size: 18px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+}
+
+.btn-submit:hover {
+    background-color: #45a049;
+}
+
+/* Footer Styling */
+footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+footer p {
+    margin: 0;
+    font-size: 14px;
+}

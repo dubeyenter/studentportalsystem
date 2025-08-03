@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Reports - Admin Dashboard</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: url('/images/background.jpg.webp') no-repeat center center fixed;
+            background-size: cover;
+        }
+
+        .sidebar {
+            background-color: #2c3e50;
+            color: white;
+            width: 230px;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            padding-top: 20px;
+        }
+
+        .sidebar h2 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .sidebar a {
+            display: block;
+            padding: 12px;
+            color: white;
+            text-decoration: none;
+            border-bottom: 1px solid #34495e;
+        }
+
+        .sidebar a:hover {
+            background-color: #34495e;
+        }
+
+        .content {
+            margin-left: 230px;
+            padding: 20px;
+        }
+
+        .content h1 {
+            font-size: 32px;
+            margin-bottom: 20px;
+        }
+
+        .report-filters {
+            margin-bottom: 20px;
+        }
+
+        .report-filters select, .report-filters input {
+            padding: 8px;
+            margin-right: 15px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        td {
+            background-color: #f9f9f9;
+        }
+
+        .btn-export {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        .btn-export:hover {
+            background-color: #45a049;
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Sidebar Navigation -->
+    <div class="sidebar">
+        <h2>Admin Dashboard</h2>
+        <a href="admindashboard.html">Home</a>
+        <a href="ManageStudents.html">Manage Students</a>
+        <a href="ManageFaculty.html">Manage Faculty</a>
+        <a href="ViewReports.html">View Reports</a>
+        <a href="PostAnnouncement.html">Post Announcement</a>
+        <a href="../AdminLogin.html" class="btn-logout">Logout</a>
+    </div>
+
+    <!-- Main Content Area -->
+    <div class="content">
+        <h1>View Reports</h1>
+
+        <!-- Report Filters -->
+        <div class="report-filters">
+            <label for="courseSelect">Select Course:</label>
+            <select id="courseSelect">
+                <option value="all">All Courses</option>
+                <option value="btech">B.Tech</option>
+                <option value="mca">MCA</option>
+                <option value="mba">MBA</option>
+            </select>
+
+            <label for="semesterSelect">Select Semester:</label>
+            <select id="semesterSelect">
+                <option value="all">All Semesters</option>
+                <option value="semester1">Semester 1</option>
+                <option value="semester2">Semester 2</option>
+                <option value="semester3">Semester 3</option>
+            </select>
+
+            <label for="dateRange">Date Range:</label>
+            <input type="date" id="startDate" />
+            to
+            <input type="date" id="endDate" />
+
+            <button class="btn-export" id="applyFilters">Apply Filters</button>
+        </div>
+
+        <!-- Report Table: Attendance Report -->
+        <h2>Attendance Report</h2>
+        <table id="attendanceReport">
+            <thead>
+                <tr>
+                    <th>Student Name</th>
+                    <th>Course</th>
+                    <th>Semester</th>
+                    <th>Attendance</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>John Doe</td>
+                    <td>B.Tech</td>
+                    <td>Semester 1</td>
+                    <td>Present</td>
+                    <td>2024-01-15</td>
+                </tr>
+                <tr>
+                    <td>Jane Smith</td>
+                    <td>MCA</td>
+                    <td>Semester 2</td>
+                    <td>Absent</td>
+                    <td>2024-02-15</td>
+                </tr>
+                <!-- Additional rows can be populated dynamically -->
+            </tbody>
+        </table>
+
+        <!-- Export Buttons -->
+        <button class="btn-export" onclick="exportToExcel()">Export to Excel</button>
+        <button class="btn-export" onclick="exportToPDF()">Export to PDF</button>
+
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Student Portal System. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        // Apply filters function
+        document.getElementById('applyFilters').addEventListener('click', function() {
+            const course = document.getElementById('courseSelect').value;
+            const semester = document.getElementById('semesterSelect').value;
+            const startDate = document.getElementById('startDate').value;
+            const endDate = document.getElementById('endDate').value;
+
+            console.log("Filters Applied: ", course, semester, startDate, endDate);
+            // Use these values to filter the data dynamically via an AJAX call to your backend
+        });
+
+        // Export to Excel (placeholder function)
+        function exportToExcel() {
+            alert("Exporting to Excel...");
+            // Implement the logic to export the table to an Excel file
+        }
+
+        // Export to PDF (placeholder function)
+        function exportToPDF() {
+            alert("Exporting to PDF...");
+            // Implement the logic to export the table to a PDF file
+        }
+    </script>
+
+</body>
+</html>

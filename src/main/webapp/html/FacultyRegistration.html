@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en" class="faculty-register-page">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Faculty Registration</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Auto-fill Hire Date with today's date
+            let today = new Date().toISOString().split('T')[0];
+            document.getElementById("hire_date").value = today;
+        });
+    </script>
+    <style>
+        /* Styling for the registration form */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: url('../images/background.jpg.webp') no-repeat center center fixed;
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .registration-form-container {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        header img {
+            width: 100px; /* Adjust logo size */
+            margin-bottom: 10px;
+        }
+
+        .form-title {
+            text-align: center;
+            font-size: 26px;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 16px;
+            margin-bottom: 8px;
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .btn-submit {
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px 20px;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .btn-submit:hover {
+            background-color: #45a049;
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+
+        footer p {
+            margin: 0;
+            font-size: 14px;
+        }
+
+        /* Responsive styling */
+        @media (max-width: 768px) {
+            .registration-form-container {
+                padding: 30px;
+                max-width: 90%;
+            }
+
+            .form-title {
+                font-size: 22px;
+            }
+
+            .form-group input, .form-group select {
+                font-size: 14px;
+                padding: 8px;
+            }
+
+            .btn-submit {
+                padding: 10px 16px;
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="registration-form-container">
+        <header>
+            <img src="../images/logo.png" alt="Faculty Portal Logo">
+            <h1>Faculty Registration</h1>
+        </header>
+
+        <h2 class="form-title">Register as Faculty</h2>
+
+        <!-- Registration Form -->
+        <form id="facultyRegistrationForm" action="/StudentPortalSystem/FacultyRegistrationServlet" method="POST">
+            <div class="form-group">
+                <label for="first_name">First Name:</label>
+                <input type="text" id="first_name" name="first_name" required placeholder="Enter your first name">
+            </div>
+
+            <div class="form-group">
+                <label for="last_name">Last Name:</label>
+                <input type="text" id="last_name" name="last_name" required placeholder="Enter your last name">
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required placeholder="Enter your email">
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required placeholder="Enter a password">
+            </div>
+
+            <div class="form-group">
+                <label for="department">Department:</label>
+                <select id="department" name="department" required>
+                    <option value="">Select your Department</option>
+                    <option value="Computer Science">Computer Science</option>
+                    <option value="Mathematics">Mathematics</option>
+                    <option value="Physics">Physics</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="dob">Date of Birth:</label>
+                <input type="date" id="dob" name="dob" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="hire_date">Hire Date:</label>
+                <input type="date" id="hire_date" name="hire_date" class="readonly" readonly>
+            </div>
+
+            <div class="form-group">
+                <button type="submit" class="btn-submit">Register</button>
+            </div>
+        </form>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Student Portal System. All rights reserved.</p>
+    </footer>
+</body>
+</html>

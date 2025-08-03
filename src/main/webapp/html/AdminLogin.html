@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en" class="admin-login-page">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login</title>
+    <style>
+        /* Basic Page Styling */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: url('../images/background.jpg.webp') no-repeat center center fixed; /* Updated background path */
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .login-form-container {
+            background-color: rgba(255, 255, 255, 0.9); /* White with transparency */
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        header img {
+            width: 100px; /* Adjust logo size */
+            margin-bottom: 10px;
+        }
+
+        .form-title {
+            text-align: center;
+            font-size: 26px;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 16px;
+            margin-bottom: 8px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .btn-submit {
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px 20px;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .btn-submit:hover {
+            background-color: #45a049;
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+
+        footer p {
+            margin: 0;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Main Content -->
+    <div class="login-form-container">
+        <header>
+            <img src="../images/logo.png" alt="Admin Portal Logo"> <!-- Updated logo path -->
+            <h1>Admin Login</h1>
+        </header>
+
+        <h2 class="form-title">Login to Your Account</h2>
+        
+        
+        
+
+        <!-- Login Form -->
+        <form id="AdminLoginForm" action="../AdminLoginServlet" method="POST">
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required placeholder="Enter your email">
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required placeholder="Enter your password">
+            </div>
+
+            <div class="form-group">
+                <button type="submit" class="btn-submit">Login</button>
+            </div>
+
+            <div class="form-group" style="text-align: center;">
+                <p>Don't have an account? <a href="AdministratorRegistration.html">Register Here</a></p>
+            </div>
+        </form>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 Faculty Portal System. All Rights Reserved.</p>
+    </footer>
+</body>
+</html>
+
+
+
+
+

@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Manual Attendance</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <style>
+        .attendance-container {
+            max-width: 900px;
+            margin: auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            font-family: 'Arial', sans-serif;
+        }
+
+        h2 {
+            text-align: center;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-size: 16px;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        select, input[type="date"] {
+            margin: 10px 0;
+            padding: 10px;
+            width: 100%;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 16px;
+            background-color: #f9f9f9;
+        }
+
+        select:focus, input[type="date"]:focus {
+            border-color: #4CAF50;
+            outline: none;
+            background-color: #fff;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 20px;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .student-list {
+            margin-top: 30px;
+            padding-top: 10px;
+            border-top: 2px solid #eee;
+        }
+
+        .student-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid #f1f1f1;
+            font-size: 16px;
+        }
+
+        .student-row span {
+            font-weight: bold;
+        }
+
+        .student-row label {
+            font-size: 14px;
+            color: #333;
+        }
+
+        .student-row input[type="checkbox"] {
+            margin-left: 10px;
+        }
+
+        /* Loading Spinner */
+        #loadingSpinner {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="attendance-container">
+    <h2>Mark Manual Attendance</h2>
+
+    <label for="course">Course:</label>
+    <select id="courseDropdown"></select>
+
+    <label for="semester">Semester:</label>
+    <select id="semesterDropdown"></select>
+
+    <label for="subject">Subject:</label>
+    <select id="subjectDropdown"></select>
+
+    <label for="date">Date:</label>
+    <input type="date" id="attendanceDate" />
+
+    <div id="studentList" class="student-list">
+        <!-- Student checkboxes will appear here -->
+    </div>
+
+    <button onclick="submitAttendance()">Submit Attendance</button>
+
+    <!-- Loading Spinner -->
+    <div id="loadingSpinner">
+        <img src="path/to/spinner.gif" alt="Loading..." />
+    </div>
+</div>
+
+<script>
+let fullCourseData = [];
+
+window.onload = function () {
+    fetch('../CourseServlet')
+        .then(res => res.json())
+        .then(data => {
+            fullCourseData = data;
+            populateCourses();
+        });
+
+    // Disable weekends in date picker
+    const today = new Date().toISOString().split("T")[0];
+    document.getElementById("attendanceDate").value = today;
+};
+
+function populateCourses() {
+    const courseDropdown = document.getElementById('courseDropdown');
+    const uniqueCourses = [...new Set(fullCourseData.map(item => item.course))];
+
+    courseDropdown.innerHTML = `<option value="">Select Course</option>`;
+    uniqueCourses.forEach(course => {
+        courseDropdown.innerHTML += `<option value="${course}">${course}</option>`;
+    });
+
+    courseDropdown.onchange = populateSemesters;
+}
+
+function populateSemesters() {
+    const course = document.getElementById('courseDropdown').value;
+    const semesterDropdown = document.getElementById('semesterDropdown');
+
+    const filtered = fullCourseData.filter(item => item.course === course);
+    const uniqueSemesters = [...new Set(filtered.map(item => item.semester))];
+
+    semesterDropdown.innerHTML = `<option value="">Select Semester</option>`;
+    uniqueSemesters.forEach(sem => {
+        semesterDropdown.innerHTML += `<option value="${sem}">Semester ${sem}</option>`;
+    });
+
+    semesterDropdown.onchange = populateSubjects;
+}
+
+function populateSubjects() {
+    const course = document.getElementById('courseDropdown').value;
+    const semester = document.getElementById('semesterDropdown').value;
+    const subjectDropdown = document.getElementById('subjectDropdown');
+
+    const filtered = fullCourseData.filter(item => item.course === course && item.semester == semester);
+    const uniqueSubjects = [...new Set(filtered.map(item => `${item.subjectCode} - ${item.subjectName}`))];
+
+    subjectDropdown.innerHTML = `<option value="">Select Subject</option>`;
+    uniqueSubjects.forEach(sub => {
+        subjectDropdown.innerHTML += `<option value="${sub}">${sub}</option>`;
+    });
+
+    subjectDropdown.onchange = loadStudentList;
+}
+
+function loadStudentList() {
+    const course = document.getElementById('courseDropdown').value;
+    const semester = document.getElementById('semesterDropdown').value;
+    const subject = document.getElementById('subjectDropdown').value;
+
+    // Show loading spinner while fetching data
+    document.getElementById('loadingSpinner').style.display = 'block';
+
+    // Fetch students for the selected course, semester, and subject
+    fetch(`../StudentServlet?course=${course}&semester=${semester}&subject=${subject}`)
+        .then(res => res.json())
+        .then(data => {
+            const container = document.getElementById('studentList');
+            container.innerHTML = `<h3>Students:</h3>`;
+
+            // Iterate over student data and create checkboxes
+            data.forEach(s => {
+                container.innerHTML += `
+                    <div class="student-row">
+                        <span>${s.enrollment} - ${s.name}</span>
+                        <label><input type="checkbox" name="present" value="${s.enrollment}" checked> Present</label>
+                    </div>
+                `;
+            });
+
+            // Hide loading spinner after data is loaded
+            document.getElementById('loadingSpinner').style.display = 'none';
+        })
+        .catch(error => {
+            console.error('Error loading student data:', error);
+            document.getElementById('loadingSpinner').style.display = 'none';
+        });
+}
+
+function submitAttendance() {
+    const selectedStudents = [...document.querySelectorAll('input[name="present"]:checked')]
+        .map(cb => cb.value);
+
+    const course = document.getElementById('courseDropdown').value;
+    const semester = document.getElementById('semesterDropdown').value;
+    const subject = document.getElementById('subjectDropdown').value;
+    const date = document.getElementById('attendanceDate').value;
+
+    console.log({
+        course, semester, subject, date, presentStudents: selectedStudents
+    });
+
+    // Send this data to the backend (ManualAttendanceServlet)
+    fetch('../ManualAttendanceServlet', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            course,
+            semester,
+            subject,
+            date,
+            presentStudents: selectedStudents
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('Attendance submitted:', data);
+        // Show success message or clear form if necessary
+    })
+    .catch(error => {
+        console.error('Error submitting attendance:', error);
+    });
+}
+</script>
+
+</body>
+</html>

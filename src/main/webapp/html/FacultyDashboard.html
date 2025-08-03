@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Faculty Dashboard</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .sidebar {
+            background-color: #2c3e50;
+            color: white;
+            width: 230px;
+            height: 100vh;
+            position: fixed;
+            left: 0;
+            top: 0;
+            padding-top: 20px;
+        }
+
+        .sidebar h2 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .sidebar a {
+            display: block;
+            padding: 12px;
+            color: white;
+            text-decoration: none;
+            border-bottom: 1px solid #34495e;
+        }
+
+        .sidebar a:hover {
+            background-color: #34495e;
+        }
+
+        .content {
+            margin-left: 230px;
+            padding: 20px;
+        }
+
+        .content h1 {
+            font-size: 32px;
+        }
+
+        .content h1 .faculty-name {
+            color: #2c3e50;
+            font-style: italic;
+        }
+
+        .card-container {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+        }
+
+        .card {
+            background-color: #f3f3f3;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 250px;
+            margin: 15px;
+        }
+
+        .card h3 {
+            font-size: 18px;
+        }
+
+        .card span {
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .btn-logout {
+            background-color: #e74c3c;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .btn-logout:hover {
+            background-color: #c0392b;
+        }
+
+        footer {
+            background-color: #34495e;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+
+        footer p {
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Sidebar Navigation -->
+    <div class="sidebar">
+        <h2>Faculty Dashboard</h2>
+        <a href="FacultyDashboard.html">Home</a>
+        <a href="ManageStudents.html">Manage Students</a>
+        <a href="UploadMarks.html">Upload Marks</a>
+         <a href="MarkAttendance.html">Manage Attendance</a>
+         <a href="automaticattendance.html">Automatic Attendance</a>
+        <a href="PostAnnouncement.html">Post Announcement</a>
+        <a href="../html/FacultyLogin.html" class="btn-logout">Logout</a>
+    </div>
+
+    <!-- Main Content Area -->
+    <div class="content">
+        <h1>Welcome to Faculty Dashboard <span class="faculty-name" id="facultyName">Faculty Member</span>,</h1>
+
+        <!-- Statistics Cards -->
+        <div class="card-container">
+            <div class="card">
+                <h3>Total Announcements</h3>
+                <span id="announcementCount">0</span>
+            </div>
+            <div class="card">
+                <h3>Total Registered Students</h3>
+                <span id="studentCount">0</span>
+            </div>
+            <div class="card">
+                <h3>Total Marks Uploaded</h3>
+                <span id="marksCount">0</span>
+            </div>
+            <div class="card" onclick="location.href='MarkAttendance.html'">
+               <h3>Mark Attendance</h3>
+               <p>Record lecture-wise attendance manually.</p>
+           </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2024 Faculty Portal System. All Rights Reserved.</p>
+    </footer>
+
+    <!-- JavaScript to Fetch Data from Servlet -->
+    <script>
+        // Fetch data from FacultyDashboardServlet
+        $(document).ready(function () {
+            $.ajax({
+                url: "../FacultyDashboardServlet",
+                method: "GET",
+                dataType: "json",
+                success: function (data) {
+                    console.log("Dashboard Data:", data); // Debug: Log the JSON response
+                    console.log("Total Online Marks:", data.totalOnlineMarks);
+                    console.log("Total Offline Marks:", data.totalOfflineMarks);
+                    console.log("Faculty Name:", data.facultyName);
+
+                    $("#announcementCount").text(data.totalAnnouncements);
+                    $("#studentCount").text(data.totalStudents);
+
+                    // Calculate total marks uploaded (online + offline)
+                    const totalMarks = (data.totalOnlineMarks || 0) + (data.totalOfflineMarks || 0);
+                    console.log("Calculated Total Marks:", totalMarks); // Debug: Log the calculated total
+                    $("#marksCount").text(totalMarks);
+
+                    // Display the faculty's name in the heading
+                    $("#facultyName").text(data.facultyName || "Faculty Member");
+                },
+                error: function (xhr, status, error) {
+                    console.error("Error fetching dashboard data:", status, error);
+                    alert("Failed to load dashboard data.");
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" class="student-dashboard-page">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard</title>
+    <link rel="stylesheet" href="../css/studentdashboard.css"> <!-- External CSS -->
+</head>
+<body>
+    <!-- Dashboard Container -->
+    <div class="dashboard-container">
+        <!-- Header Section -->
+        <header>
+             <img src="../images/logo.png" alt="Student Portal Logo" class="logo">
+             <h1>Student Dashboard</h1>
+            <img id="profilePicture" src="/images/default-profile.png" alt="Student Profile"> <!-- Profile Picture -->
+            <h1>Welcome, <span id="studentName"></span></h1>
+        </header>
+        <!-- Profile Information Section -->
+        
+         <div class="student-profile">
+           <img src="../images/default-profile.png" alt="Student Profile Picture" class="profile-pic">
+           <p id="student-name">Student Name</p>
+           </div>
+        
+        <div class="profile-info">
+            <div><strong>Email:</strong> <span id="student-email"></span></div>
+            <div><strong>Branch:</strong> <span id="student-branch"></span></div>
+            <div><strong>Enrollment Date:</strong> <span id="student-enrollment"></span></div>
+            <div><strong>Date of Birth:</strong> <span id="student-dob"></span></div>
+        </div>
+
+        <!-- Announcements Section -->
+        <div class="card">
+            <h2 class="section-title">Announcements</h2>
+            <div id="announcements"></div> <!-- Announcements Load Here -->
+        </div>
+
+        <!-- Attendance Section -->
+        <div class="card">
+            <h2 class="section-title">Attendance</h2>
+            <p>Your attendance so far: <span id="attendancePercentage"></span></p>
+        </div>
+
+        <!-- Weekly Tests Section -->
+        <div class="card">
+            <h2 class="section-title">Weekly Tests</h2>
+            <p><a href="Studenttest.html">Take your Weekly Test</a></p>
+        </div>
+
+        <!-- Logout Button -->
+        <div class="logout-btn">
+            <button class="btn" onclick="window.location.href='../html/studentlogin.html'">Logout</button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2024 Student Portal System. All Rights Reserved.</p>
+    </footer>
+
+    <!-- JavaScript for Dynamic Content -->
+    <script src="../js/studentdashboard.js"></script>
+</body>
+</html>

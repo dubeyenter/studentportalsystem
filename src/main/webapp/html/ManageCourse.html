@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Manage Courses</title>
+  <link rel="stylesheet" href="../css/styles.css" />
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+    }
+    .sidebar {
+      background-color: #2c3e50;
+      color: white;
+      width: 230px;
+      height: 100vh;
+      position: fixed;
+      left: 0;
+      top: 0;
+      padding-top: 20px;
+    }
+    .sidebar a {
+      display: block;
+      padding: 12px;
+      color: white;
+      text-decoration: none;
+      border-bottom: 1px solid #34495e;
+    }
+    .sidebar a:hover {
+      background-color: #34495e;
+    }
+    .main {
+      margin-left: 220px;
+      padding: 20px;
+    }
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .topbar h1 {
+      margin: 0;
+    }
+    .course-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    .course-table th, .course-table td {
+      border: 1px solid #ddd;
+      padding: 10px;
+      text-align: left;
+    }
+    .course-table th {
+      background-color: #4CAF50;
+      color: white;
+    }
+    .btn {
+      padding: 10px 15px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      cursor: pointer;
+      margin: 5px 0;
+    }
+    .btn:hover {
+      background-color: #45a049;
+    }
+    .btn-delete {
+      background-color: #f44336;
+    }
+    .btn-delete:hover {
+      background-color: #da190b;
+    }
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 2;
+      padding-top: 60px;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0,0,0,0.4);
+    }
+    .modal-content {
+      background-color: #fff;
+      margin: auto;
+      padding: 20px;
+      border: 1px solid #888;
+      width: 50%;
+    }
+    .close {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+    }
+    .close:hover,
+    .close:focus {
+      color: black;
+      cursor: pointer;
+    }
+    .form-group {
+      margin-bottom: 15px;
+    }
+    label {
+      display: block;
+      font-weight: bold;
+    }
+    input[type="text"], input[type="number"] {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+    }
+  </style>
+</head>
+<body>
+<div class="sidebar">
+  <a href="admindashboard.html">Home</a>
+  <a href="ManageCourse.html">Manage Courses</a>
+  <a href="ManageStudents.html">Manage Students</a>
+  <a href="ManageFaculties.html">Manage Faculties</a>
+  <a href="PostAnnouncement.html">Create Announcement</a>
+  <a href="view_reports.html">View Reports</a>
+  <a href="../html/AdminLogin.html" class="btn-logout">Logout</a>
+</div>
+
+<div class="main">
+  <div class="topbar">
+    <h1>Manage Courses</h1>
+    <button class="btn" onclick="openAddModal()">Add New Course</button>
+  </div>
+
+  <table class="course-table" id="courseTable">
+    <thead>
+      <tr>
+        <th>Course ID</th>
+        <th>Subject Code</th>
+        <th>Subject Name</th>
+        <th>Course</th>
+        <th>Semester</th>
+        <th>Faculty ID</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Course rows go here via JS -->
+    </tbody>
+  </table>
+</div>
+
+<!-- Add Course Modal -->
+<div id="addModal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeAddModal()">×</span>
+    <h2>Add Course</h2>
+    <div class="form-group">
+      <label>Subject Code</label>
+      <input type="text" id="subjectCode" required />
+    </div>
+    <div class="form-group">
+      <label>Subject Name</label>
+      <input type="text" id="subjectName" required />
+    </div>
+    <div class="form-group">
+      <label>Course (MCA, B.Tech, MBA)</label>
+      <input type="text" id="course" required />
+    </div>
+    <div class="form-group">
+      <label>Semester</label>
+      <input type="number" id="semester" required />
+    </div>
+    <div class="form-group">
+      <label>Faculty ID</label>
+      <input type="number" id="facultyId" required />
+    </div>
+    <button class="btn" onclick="addCourse()">Add</button>
+  </div>
+</div>
+
+<!-- Edit Course Modal -->
+<div id="editModal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeEditModal()">×</span>
+    <h2>Edit Course</h2>
+    <input type="hidden" id="courseId" />
+    <div class="form-group">
+      <label>Subject Code</label>
+      <input type="text" id="editSubjectCode" required />
+    </div>
+    <div class="form-group">
+      <label>Subject Name</label>
+      <input type="text" id="editSubjectName" required />
+    </div>
+    <div class="form-group">
+      <label>Course (MCA, B.Tech, MBA)</label>
+      <input type="text" id="editCourse" required />
+    </div>
+    <div class="form-group">
+      <label>Semester</label>
+      <input type="number" id="editSemester" required />
+    </div>
+    <div class="form-group">
+      <label>Faculty ID</label>
+      <input type="number" id="editFacultyId" required />
+    </div>
+    <button class="btn" onclick="updateCourse()">Update</button>
+  </div>
+</div>
+
+<script>
+  function openAddModal() {
+    document.getElementById("addModal").style.display = "block";
+  }
+
+  function closeAddModal() {
+    document.getElementById("addModal").style.display = "none";
+  }
+
+  function populateEditModal(course) {
+    try {
+      document.getElementById("courseId").value = course.courseId || '';
+      document.getElementById("editSubjectCode").value = course.subjectCode || '';
+      document.getElementById("editSubjectName").value = course.subjectName || '';
+      document.getElementById("editCourse").value = course.course || '';
+      document.getElementById("editSemester").value = course.semester || '';
+      document.getElementById("editFacultyId").value = course.facultyId || '';
+
+      // Force DOM update
+      const inputs = [
+        document.getElementById("courseId"),
+        document.getElementById("editSubjectCode"),
+        document.getElementById("editSubjectName"),
+        document.getElementById("editCourse"),
+        document.getElementById("editSemester"),
+        document.getElementById("editFacultyId")
+      ];
+      inputs.forEach(input => {
+        input.dispatchEvent(new Event('input'));
+        input.dispatchEvent(new Event('change'));
+      });
+
+      console.log("Edit Modal populated with:", {
+        courseId: document.getElementById("courseId").value,
+        subjectCode: document.getElementById("editSubjectCode").value,
+        subjectName: document.getElementById("editSubjectName").value,
+        course: document.getElementById("editCourse").value,
+        semester: document.getElementById("editSemester").value,
+        facultyId: document.getElementById("editFacultyId").value
+      });
+    } catch (e) {
+      console.error("Error populating edit modal:", e);
+      alert("Error populating edit modal: " + e.message);
+    }
+  }
+
+  function openEditModal(courseId) {
+    console.log("Fetching course with ID:", courseId);
+    fetch(`../CourseServlet?courseId=${courseId}`, {
+      method: "GET",
+      cache: "no-store"
+    })
+    .then(response => {
+      console.log("Fetch response status:", response.status);
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      return response.text();
+    })
+    .then(text => {
+      console.log("Raw response text:", text);
+      const data = JSON.parse(text);
+      console.log("Parsed data:", data);
+      if (data.error) {
+        alert("Error: " + data.error);
+        return;
+      }
+      if (!data.length || data.length === 0) {
+        alert("No course data available for courseId: " + courseId);
+        return;
+      }
+      const course = data[0];
+      console.log("Course object:", course);
+      document.getElementById("editModal").style.display = "block";
+      populateEditModal(course);
+    })
+    .catch(error => {
+      console.error("Fetch error:", error);
+      alert("Failed to fetch course details: " + error.message);
+    });
+  }
+
+  function closeEditModal() {
+    document.getElementById("editModal").style.display = "none";
+  }
+
+  function addCourse() {
+    const data = {
+      subjectCode: document.getElementById("subjectCode").value,
+      subjectName: document.getElementById("subjectName").value,
+      course: document.getElementById("course").value,
+      semester: parseInt(document.getElementById("semester").value),
+      facultyId: parseInt(document.getElementById("facultyId").value)
+    };
+
+    if (!data.subjectCode || !data.subjectName || !data.course || isNaN(data.semester) || isNaN(data.facultyId)) {
+      alert("All fields are required and must be valid!");
+      return;
+    }
+
+    const formData = new URLSearchParams();
+    formData.append("subjectCode", data.subjectCode);
+    formData.append("subjectName", data.subjectName);
+    formData.append("course", data.course);
+    formData.append("semester", data.semester);
+    formData.append("facultyId", data.facultyId);
+
+    fetch("../AddCourseServlet", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: formData.toString()
+    })
+    .then(res => res.text())
+    .then(result => {
+      console.log("Add server response:", result);
+      if (result.trim() === "success") {
+        alert("Course added successfully!");
+        closeAddModal();
+        location.reload();
+      } else {
+        alert("Failed to add course: " + result);
+      }
+    })
+    .catch(error => {
+      console.error("Error:", error);
+      alert("An error occurred while adding the course.");
+    });
+  }
+
+  function updateCourse() {
+    // Capture current values from the DOM at submission time
+    const data = {
+      courseId: document.getElementById("courseId").value,
+      subjectCode: document.getElementById("editSubjectCode").value,
+      subjectName: document.getElementById("editSubjectName").value,
+      course: document.getElementById("editCourse").value,
+      semester: parseInt(document.getElementById("editSemester").value),
+      facultyId: parseInt(document.getElementById("editFacultyId").value)
+    };
+
+    // Log the values being submitted for debugging
+    console.log("Update data submitted:", {
+      courseId: data.courseId,
+      subjectCode: data.subjectCode,
+      subjectName: data.subjectName,
+      course: data.course,
+      semester: data.semester,
+      facultyId: data.facultyId
+    });
+
+    if (!data.courseId || !data.subjectCode || !data.subjectName || !data.course || isNaN(data.semester) || isNaN(data.facultyId)) {
+      alert("All fields are required and must be valid! Submitted data: " + JSON.stringify(data));
+      return;
+    }
+
+    const formData = new URLSearchParams();
+    formData.append("courseId", data.courseId);
+    formData.append("subjectCode", data.subjectCode);
+    formData.append("subjectName", data.subjectName);
+    formData.append("course", data.course);
+    formData.append("semester", data.semester);
+    formData.append("facultyId", data.facultyId);
+
+    // Log the form data being sent
+    console.log("Form data sent:", formData.toString());
+
+    fetch("../UpdateCourseServlet", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: formData.toString()
+    })
+    .then(res => res.text())
+    .then(result => {
+      console.log("Update server response:", result);
+      if (result.trim() === "success") {
+        alert("Course updated successfully!");
+        closeEditModal();
+        location.reload();
+      } else if (result.startsWith("no_update:")) {
+        alert(result);
+      } else {
+        alert("Failed to update course: " + result);
+      }
+    })
+    .catch(error => {
+      console.error("Error:", error);
+      alert("An error occurred while updating the course.");
+    });
+  }
+
+  function deleteCourse(courseId) {
+    if (confirm("Are you sure you want to delete this course?")) {
+      fetch(`../DeleteCourseServlet?courseId=${courseId}`, {
+        method: "GET"
+      })
+      .then(res => res.text())
+      .then(result => {
+        console.log("Delete server response:", result);
+        if (result.trim() === "success") {
+          alert("Course deleted successfully!");
+          location.reload();
+        } else {
+          alert("Failed to delete course: " + result);
+        }
+      })
+      .catch(error => {
+        console.error("Error:", error);
+        alert("An error occurred while deleting the course.");
+      });
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", function () {
+    fetch("../CourseServlet", {
+      cache: "no-store" // Prevent caching
+    })
+    .then(response => response.json())
+    .then(data => {
+      console.log("Initial data fetch:", data);
+      const tbody = document.querySelector("#courseTable tbody");
+      tbody.innerHTML = "";
+
+      data.forEach(course => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td>${course.courseId}</td>
+          <td>${course.subjectCode}</td>
+          <td>${course.subjectName}</td>
+          <td>${course.course}</td>
+          <td>${course.semester}</td>
+          <td>${course.facultyId}</td>
+          <td>
+            <button class="btn" onclick="openEditModal(${course.courseId})">Edit</button>
+            <button class="btn btn-delete" onclick="deleteCourse(${course.courseId})">Delete</button>
+          </td>
+        `;
+        tbody.appendChild(row);
+      });
+    })
+    .catch(error => {
+      console.error("Error fetching courses:", error);
+    });
+  });
+</script>
+</body>
+</html>

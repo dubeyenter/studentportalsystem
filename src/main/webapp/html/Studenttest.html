@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Test Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: url('/images/background.jpg.webp') no-repeat center center fixed;
+            background-size: cover;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            background-color: rgba(255, 255, 255, 0.9);
+            width: 80%;
+            margin: 50px auto;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Enhanced shadow */
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 36px;
+            margin-bottom: 20px;
+            color: #333; /* Set heading color */
+        }
+
+        p {
+            text-align: center;
+            font-size: 18px;
+            color: #555; /* Subtle color for paragraph */
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+            font-size: 18px;
+        }
+
+        td {
+            background-color: #f9f9f9;
+            font-size: 16px;
+        }
+
+        tr:hover {
+            background-color: #f1f1f1; /* Hover effect for rows */
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #45a049; /* Button hover effect */
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 15px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            font-size: 14px;
+        }
+
+        footer p {
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Student Test Dashboard</h1>
+        <p>Here are the available tests for you to take:</p>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>Test Title</th>
+                    <th>Description</th>
+                    <th>Duration (min)</th>
+                    <th>Test Date</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- This will be dynamically populated with test data from the backend -->
+                <tr>
+                    <td>Artificial Intelligence</td>
+                    <td>Introduction and History</td>
+                    <td>30</td>
+                    <td>2024-12-30</td>
+                    <td><button onclick="takeTest(1)">Take Test</button></td>
+                </tr>
+                <tr>
+                    <td>Machine Learning</td>
+                    <td>Greedy Algorithm</td>
+                    <td>45</td>
+                    <td>2024-12-31</td>
+                    <td><button onclick="takeTest(2)">Take Test</button></td>
+                </tr>
+                <!-- Add more test rows here dynamically from the backend -->
+            </tbody>
+        </table>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Student Portal System. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        function takeTest(testId) {
+            // Redirect to the test taking page with the test ID
+            window.location.href = "take_test.html?testId=" + testId;
+        }
+    </script>
+
+</body>
+</html>

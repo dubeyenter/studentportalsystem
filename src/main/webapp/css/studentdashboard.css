@@ -1,0 +1,129 @@
+/* General Styling */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: url('../images/background.jpg.webp') no-repeat center center fixed;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 120vh;
+}
+
+/* Dashboard Container */
+.dashboard-container {
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    max-width: 900px;
+    width: 100%;
+}
+
+/* Header Section */
+header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+header img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%; /* Circular Profile Picture */
+    object-fit: cover;
+    border: 3px solid #4CAF50;
+}
+
+.student-profile {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    background-color: #f1f1f1;
+    border-radius: 5px;
+}
+
+.profile-pic {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 2px solid #4CAF50;
+}
+
+/* Profile Info */
+.profile-info {
+    display: flex;
+    justify-content: space-between;
+    background: #f9f9f9;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Cards */
+.card {
+    width: 100%;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    margin-top: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Announcements Styling */
+#announcements {
+    max-height: 150px; /* Scrollable announcements */
+    overflow-y: auto;
+    padding: 10px;
+    border: 1px solid #ddd;
+    background-color: #f9f9f9;
+}
+
+.announcement-item {
+    background-color: #fff;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.announcement-container {
+    max-width: 100%;
+    padding: 10px;
+    overflow-y: auto; /* Allows scrolling if too many announcements */
+}
+
+/* Buttons */
+.btn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px 20px;
+    font-size: 18px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+}
+
+.btn:hover {
+    background-color: #45a049;
+}
+
+/* Logout Button */
+.logout-btn {
+    text-align: center;
+    margin-top: 20px;
+}
+
+/* Footer */
+footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}

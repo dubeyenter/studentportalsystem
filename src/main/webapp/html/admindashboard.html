@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #ecf0f1;
+        }
+
+        .sidebar {
+            background-color: #2c3e50;
+            color: white;
+            width: 230px;
+            height: 100vh;
+            position: fixed;
+            left: 0;
+            top: 0;
+            padding-top: 30px;
+            box-shadow: 2px 0 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .sidebar h2 {
+            text-align: center;
+            margin-bottom: 25px;
+            font-size: 22px;
+            font-weight: 500;
+        }
+
+        .sidebar a {
+            display: block;
+            padding: 14px 20px;
+            color: white;
+            text-decoration: none;
+            border-bottom: 1px solid #34495e;
+            transition: background 0.3s;
+        }
+
+        .sidebar a:hover {
+            background-color: #1abc9c;
+        }
+
+        .btn-logout {
+            background-color: #e74c3c;
+            text-align: center;
+        }
+
+        .btn-logout:hover {
+            background-color: #c0392b;
+        }
+
+        .content {
+            margin-left: 230px;
+            padding: 30px;
+        }
+
+        .content h1 {
+            font-size: 28px;
+            color: #2c3e50;
+            margin-bottom: 30px;
+        }
+
+        .admin-name {
+            font-weight: bold;
+            color: #2980b9;
+        }
+
+        .card-container {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .card {
+            background-color: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 250px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+        }
+
+        .card h3 {
+            font-size: 20px;
+            color: #34495e;
+            margin-bottom: 15px;
+        }
+
+        .card span {
+            font-size: 32px;
+            font-weight: bold;
+            color: #27ae60;
+        }
+
+        footer {
+            background-color: #34495e;
+            color: white;
+            text-align: center;
+            padding: 15px 0;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            left: 0;
+        }
+
+        @media screen and (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+            }
+            .content {
+                margin-left: 0;
+                padding: 20px;
+            }
+            .card-container {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Sidebar Navigation -->
+    <div class="sidebar">
+        <h2>Admin Dashboard</h2>
+        <a href="admindashboard.html">Home</a>
+        <a href="ManageCourse.html">Manage Courses</a>
+        <a href="ManageStudents.html">Manage Students</a>
+        <a href="ManageFaculties.html">Manage Faculties</a>
+        <a href="PostAnnouncement.html">Create Announcement</a>
+        <a href="MarkAttendance.html">Manage Attendance</a>
+        <a href="viewreports.html">View Reports</a>
+        <a href="../html/AdminLogin.html" class="btn-logout">Logout</a>
+    </div>
+
+    <!-- Main Content Area -->
+    <div class="content">
+        <h1>Welcome to Admin Dashboard, <span class="admin-name" id="adminName">Administrator</span></h1>
+
+        <!-- Statistics Cards -->
+        <div class="card-container">
+            <div class="card">
+                <h3>Total Students</h3>
+                <span id="studentCount">0</span>
+            </div>
+            <div class="card">
+                <h3>Total Faculties</h3>
+                <span id="facultyCount">0</span>
+            </div>
+            <div class="card">
+                <h3>Total Announcements</h3>
+                <span id="announcementCount">0</span>
+            </div>
+            <div class="card">
+                <h3>Reports Generated</h3>
+                <span id="reportCount">0</span>
+            </div>
+            <div class="card">
+               <h3>Total Attendance Records</h3>
+               <span id="attendanceCount">0</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2024 Admin Portal System. All Rights Reserved.</p>
+    </footer>
+
+    <!-- JavaScript to Fetch Dashboard Data -->
+    <script>
+        $(document).ready(function () {
+            $.ajax({
+                url: "../AdminDashboardServlet",
+                method: "GET",
+                dataType: "json",
+                success: function (data) {
+                    $("#adminName").text(data.adminName || "Administrator");
+                    $("#studentCount").text(data.totalStudents || 0);
+                    $("#facultyCount").text(data.totalFaculties || 0);
+                    $("#announcementCount").text(data.totalAnnouncements || 0);
+                    $("#attendanceCount").text(data.totalAttendance || 0);
+                    $("#reportCount").text(data.totalReports || 0);
+                },
+                error: function (xhr, status, error) {
+                    console.error("Dashboard data load failed:", status, error);
+                }
+            });
+        });
+    </script>
+</body>
+</html>

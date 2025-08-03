@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Students</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <!-- Load jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .sidebar {
+            background-color: #2c3e50;
+            color: white;
+            width: 230px;
+            height: 100vh;
+            position: fixed;
+            left: 0;
+            top: 0;
+            padding-top: 20px;
+        }
+
+        .sidebar h2 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .sidebar a {
+            display: block;
+            padding: 12px;
+            color: white;
+            text-decoration: none;
+            border-bottom: 1px solid #34495e;
+        }
+
+        .sidebar a:hover {
+            background-color: #34495e;
+        }
+
+        .content {
+            margin-left: 230px;
+            padding: 20px;
+        }
+
+        .content h1 {
+            font-size: 32px;
+            margin-bottom: 20px;
+        }
+
+        .search-bar {
+            margin-bottom: 20px;
+        }
+
+        .search-bar input {
+            padding: 8px;
+            width: 300px;
+            font-size: 16px;
+        }
+
+        .search-bar button {
+            padding: 8px 16px;
+            background-color: #2c3e50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        .search-bar button:hover {
+            background-color: #34495e;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #2c3e50;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        .action-btn {
+            padding: 5px 10px;
+            margin-right: 5px;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+            color: white;
+            border-radius: 3px;
+        }
+
+        .marks-btn {
+            background-color: #27ae60;
+        }
+
+        .marks-btn:hover {
+            background-color: #219653;
+        }
+
+        .display-marks-btn {
+            background-color: #e67e22;
+        }
+
+        .display-marks-btn:hover {
+            background-color: #d35400;
+        }
+
+        footer {
+            background-color: #34495e;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+
+        footer p {
+            margin: 0;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 600px;
+            border-radius: 5px;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .marks-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        .marks-table th,
+        .marks-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        .marks-table th {
+            background-color: #2c3e50;
+            color: white;
+        }
+
+        .marks-table tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar Navigation -->
+    <div class="sidebar">
+        <h2>Faculty Dashboard</h2>
+        <a href="FacultyDashboard.html">Home</a>
+        <a href="ManageStudents.html">Manage Students</a>
+        <a href="UploadMarks.html">Upload Marks</a>
+        <a href="PostAnnouncement.html">Post Announcement</a>
+        <a href="../LogoutServlet" class="btn-logout">Logout</a>
+    </div>
+
+    <!-- Main Content Area -->
+    <div class="content">
+        <h1>Manage Students</h1>
+
+        <!-- Search Bar -->
+        <div class="search-bar">
+            <input type="text" id="searchInput" placeholder="Search by Enrollment Number or Name">
+            <button onclick="searchStudents()">Search</button>
+        </div>
+
+        <!-- Students Table -->
+        <table id="studentsTable">
+            <thead>
+                <tr>
+                    <th>Enrollment Number</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Course</th>
+                    <th>Online Marks (Latest)</th>
+                    <th>Offline Marks (Latest)</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="studentsTableBody">
+                <!-- Student data will be populated here -->
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Modal for Displaying Marks -->
+    <div id="marksModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">×</span>
+            <h2>Student Marks</h2>
+            <div id="marksContent"></div>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2024 Faculty Portal System. All Rights Reserved.</p>
+    </footer>
+
+    <!-- JavaScript to Fetch and Manage Student Data -->
+    <script>
+        $(document).ready(function () {
+            // Fetch all students on page load
+            fetchStudents();
+        });
+
+        function fetchStudents(searchQuery = '') {
+            $.ajax({
+                url: "../ManageStudentsServlet",
+                method: "GET",
+                data: { search: searchQuery },
+                dataType: "json",
+                success: function (data) {
+                    console.log("Students Data:", data);
+                    const tableBody = $("#studentsTableBody");
+                    tableBody.empty();
+
+                    if (data.length === 0) {
+                        tableBody.append('<tr><td colspan="7">No students found.</td></tr>');
+                        return;
+                    }
+
+                    data.forEach(student => {
+                        const row = `
+                            <tr>
+                                <td>${student.studentId}</td>
+                                <td>${student.firstName} ${student.lastName}</td>
+                                <td>${student.email}</td>
+                                <td>${student.course || 'N/A'}</td>
+                                <td>${student.onlineMarks || 'N/A'}</td>
+                                <td>${student.offlineMarks || 'N/A'}</td>
+                                <td>
+                                    <button class="action-btn marks-btn" onclick="uploadMarks('${student.studentId}')">Upload Marks</button>
+                                    <button class="action-btn display-marks-btn" onclick="displayMarks('${student.studentId}')">Display Marks</button>
+                                </td>
+                            </tr>
+                        `;
+                        tableBody.append(row);
+                    });
+                },
+                error: function (xhr, status, error) {
+                    console.error("Error fetching students:", status, error);
+                    alert("Failed to load student data.");
+                }
+            });
+        }
+
+        function searchStudents() {
+            const searchQuery = $("#searchInput").val();
+            fetchStudents(searchQuery);
+        }
+
+        function uploadMarks(enrollmentNumber) {
+            const testName = prompt("Enter the test name:");
+            if (!testName) {
+                alert("Test name is required.");
+                return;
+            }
+
+            const onlineMarks = prompt("Enter online marks (leave blank if not applicable):");
+            const offlineMarks = prompt("Enter offline marks (leave blank if not applicable):");
+
+            // Upload online marks if provided
+            if (onlineMarks !== null && onlineMarks !== '') {
+                $.ajax({
+                    url: "../UploadMarksServlet",
+                    method: "POST",
+                    data: { enrollmentNumber: enrollmentNumber, testName: testName, marks: onlineMarks },
+                    success: function (response) {
+                        console.log("Online marks uploaded successfully for student " + enrollmentNumber);
+                    },
+                    error: function (xhr, status, error) {
+                        console.error("Error uploading online marks:", status, error);
+                        alert("Failed to upload online marks.");
+                    }
+                });
+            }
+
+            // Upload offline marks if provided
+            if (offlineMarks !== null && offlineMarks !== '') {
+                $.ajax({
+                    url: "../UploadOfflineMarksServlet",
+                    method: "POST",
+                    data: { enrollmentNumber: enrollmentNumber, testName: testName, marks: offlineMarks },
+                    success: function (response) {
+                        console.log("Offline marks uploaded successfully for student " + enrollmentNumber);
+                    },
+                    error: function (xhr, status, error) {
+                        console.error("Error uploading offline marks:", status, error);
+                        alert("Failed to upload offline marks.");
+                    }
+                });
+            }
+
+            // Refresh the table after both requests (even if one fails)
+            setTimeout(() => {
+                fetchStudents();
+                if (onlineMarks !== null || offlineMarks !== null) {
+                    alert("Marks upload process completed!");
+                }
+            }, 500);
+        }
+
+        function displayMarks(enrollmentNumber) {
+            $.ajax({
+                url: "../ViewAllMarksServlet",
+                method: "GET",
+                data: { enrollmentNumber: enrollmentNumber },
+                dataType: "json",
+                success: function (data) {
+                    console.log("Marks Data Received:", JSON.stringify(data));
+                    const marksContent = $("#marksContent");
+                    marksContent.empty();
+
+                    if (data.error) {
+                        marksContent.append(`<p>Error: ${data.error}</p>`);
+                    } else if (data.length === 0) {
+                        marksContent.append('<p>No marks found for this student.</p>');
+                    } else {
+                        // Build a single table for all marks (no course grouping)
+                        const rows = data.map(mark => {
+                            return `
+                                <tr>
+                                    <td>${mark.testName}</td>
+                                    <td>${mark.testDate}</td>
+                                    <td>${mark.marks}</td>
+                                    <td>${mark.type}</td>
+                                </tr>
+                            `;
+                        }).join('');
+                        const table = `
+                            <table class="marks-table">
+                                <thead>
+                                    <tr>
+                                        <th>Test Name</th>
+                                        <th>Date</th>
+                                        <th>Marks</th>
+                                        <th>Type</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    ${rows}
+                                </tbody>
+                            </table>
+                        `;
+                        marksContent.append(table);
+                    }
+
+                    $("#marksModal").css("display", "block");
+                },
+                error: function (xhr, status, error) {
+                    console.error("Error fetching marks:", status, error);
+                    alert("Failed to load marks: " + (xhr.responseText || "Unknown error"));
+                }
+            });
+        }
+
+        function closeModal() {
+            $("#marksModal").css("display", "none");
+        }
+
+        // Close the modal if the user clicks outside of it
+        $(window).on("click", function(event) {
+            const modal = $("#marksModal");
+            if (event.target === modal[0]) {
+                modal.css("display", "none");
+            }
+        });
+    </script>
+</body>
+</html>

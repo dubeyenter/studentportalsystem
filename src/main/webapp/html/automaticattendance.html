@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Automatic Attendance</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        /* Style for the page */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .sidebar {
+            background-color: #2c3e50;
+            color: white;
+            width: 230px;
+            height: 100vh;
+            position: fixed;
+            left: 0;
+            top: 0;
+            padding-top: 20px;
+        }
+
+        .sidebar h2 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .sidebar a {
+            display: block;
+            padding: 12px;
+            color: white;
+            text-decoration: none;
+            border-bottom: 1px solid #34495e;
+        }
+
+        .sidebar a:hover {
+            background-color: #34495e;
+        }
+
+        .content {
+            margin-left: 230px;
+            padding: 20px;
+        }
+
+        .content h1 {
+            font-size: 32px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #2c3e50;
+            color: white;
+        }
+
+        td {
+            background-color: #f9f9f9;
+        }
+
+        .btn-update {
+            background-color: #2ecc71;
+            color: white;
+            padding: 8px 12px;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .btn-update:hover {
+            background-color: #27ae60;
+        }
+
+        footer {
+            background-color: #34495e;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+
+        footer p {
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Sidebar Navigation -->
+    <div class="sidebar">
+        <h2>Faculty Dashboard</h2>
+        <a href="FacultyDashboard.html">Home</a>
+        <a href="ManageStudents.html">Manage Students</a>
+        <a href="UploadMarks.html">Upload Marks</a>
+        <a href="MarkAttendance.html">Manage Attendance</a>
+        <a href="AutomaticAttendance.html">Automatic Attendance</a> <!-- Active Link -->
+        <a href="PostAnnouncement.html">Post Announcement</a>
+        <a href="../html/FacultyLogin.html" class="btn-logout">Logout</a>
+    </div>
+
+    <!-- Main Content Area -->
+    <div class="content">
+        <h1>Automatic Attendance for Today's Lecture</h1>
+
+        <!-- Attendance Table -->
+        <table>
+            <thead>
+                <tr>
+                    <th>Student Name</th>
+                    <th>Enrollment Number</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="attendanceTable">
+                <!-- Dynamic rows will be inserted here -->
+            </tbody>
+        </table>
+
+        <!-- Button to Trigger Automatic Attendance Capture -->
+        <button class="btn-update" id="captureAttendanceBtn">Capture Attendance Automatically</button>
+    </div>
+
+    <footer>
+        <p>© 2024 Faculty Portal System. All Rights Reserved.</p>
+    </footer>
+
+    <!-- JavaScript to Fetch Automatic Attendance Data -->
+    <script>
+        // Fetch attendance data from the servlet (AutomaticAttendanceServlet)
+        $(document).ready(function () {
+            $.ajax({
+                url: "../AutomaticAttendanceServlet", // Servlet to get automatic attendance data
+                method: "GET",
+                dataType: "json",
+                success: function (data) {
+                    console.log("Automatic Attendance Data:", data); // Debug: Log the data
+
+                    // Populate the table with the fetched attendance data
+                    data.attendance.forEach(function(student) {
+                        var status = student.isPresent ? "Present" : "Absent";
+                        var row = `<tr>
+                            <td>${student.studentName}</td>
+                            <td>${student.enrollmentNumber}</td>
+                            <td>${status}</td>
+                            <td><button class="btn-update">Mark as ${status === 'Present' ? 'Absent' : 'Present'}</button></td>
+                        </tr>`;
+                        $('#attendanceTable').append(row);
+                    });
+                },
+                error: function (xhr, status, error) {
+                    console.error("Error fetching attendance data:", status, error);
+                    alert("Failed to load automatic attendance data.");
+                }
+            });
+
+            // Handle the button click for automatic attendance capture
+            $('#captureAttendanceBtn').click(function () {
+                alert("Automatic attendance capture triggered!");
+                // You can implement facial recognition or another system to capture attendance here
+            });
+        });
+    </script>
+</body>
+</html>
