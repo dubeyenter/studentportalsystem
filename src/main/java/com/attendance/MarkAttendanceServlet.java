@@ -39,7 +39,7 @@ public class MarkAttendanceServlet extends HttpServlet {
                     String checkQuery = "SELECT COUNT(*) FROM ATTENDANCE WHERE ENROLLMENT_NUMBER = ? AND ATTENDANCE_DATE = ? AND COURSE_ID = ? AND SUBJECT_CODE = ?";
                     psCheck = con.prepareStatement(checkQuery);
                     psCheck.setString(1, studentId);
-                    psCheck.setDate(2, java.sql.Date.valueOf(attendanceDate));
+                    psCheck.setDate(2, Date.valueOf(attendanceDate));
                     psCheck.setString(3, course);  // Use the course code directly as a string
                     psCheck.setString(4, subjectCode);  // Use subjectCode in the query
 
@@ -53,7 +53,7 @@ public class MarkAttendanceServlet extends HttpServlet {
                         psInsert.setString(1, studentId);
                         psInsert.setString(2, course);  // Use the course code directly as a string
                         psInsert.setString(3, subjectCode);  // Use subjectCode in the insert query
-                        psInsert.setDate(4, java.sql.Date.valueOf(attendanceDate));
+                        psInsert.setDate(4, Date.valueOf(attendanceDate));
                         psInsert.setString(5, attendanceSource);  // Set the source (Faculty or Facial Recognition)
                         psInsert.executeUpdate();
                     }
@@ -67,7 +67,7 @@ public class MarkAttendanceServlet extends HttpServlet {
                     String checkQuery = "SELECT COUNT(*) FROM ATTENDANCE WHERE ENROLLMENT_NUMBER = ? AND ATTENDANCE_DATE = ? AND COURSE_ID = ? AND SUBJECT_CODE = ?";
                     psCheck = con.prepareStatement(checkQuery);
                     psCheck.setString(1, studentId);
-                    psCheck.setDate(2, java.sql.Date.valueOf(attendanceDate));
+                    psCheck.setDate(2, Date.valueOf(attendanceDate));
                     psCheck.setString(3, course);  // Use the course code directly as a string
                     psCheck.setString(4, subjectCode);  // Use subjectCode in the query
 
@@ -81,7 +81,7 @@ public class MarkAttendanceServlet extends HttpServlet {
                         psInsert.setString(1, studentId);
                         psInsert.setString(2, course);  // Use the course code directly as a string
                         psInsert.setString(3, subjectCode);  // Use subjectCode in the insert query
-                        psInsert.setDate(4, java.sql.Date.valueOf(attendanceDate));
+                        psInsert.setDate(4, Date.valueOf(attendanceDate));
                         psInsert.setString(5, attendanceSource);  // Set the source (Faculty or Facial Recognition)
                         psInsert.executeUpdate();
                     }

@@ -26,7 +26,7 @@ public class MarkAttendanceServlet extends HttpServlet {
             String dateStr = body.getString("date");
             JSONArray presentStudents = body.getJSONArray("presentStudents");
 
-            java.sql.Date sqlDate = java.sql.Date.valueOf(dateStr);
+            Date sqlDate = Date.valueOf(dateStr);
 
             Class.forName("oracle.jdbc.driver.OracleDriver");
             Connection con = DriverManager.getConnection(
