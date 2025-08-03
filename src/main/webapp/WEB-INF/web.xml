@@ -7,4 +7,191 @@
 
     <display-name>Student Portal System</display-name>
 
+<servlet>
+    <servlet-name>StudentRegistrationServlet</servlet-name>
+    <servlet-class>com.registration.StudentRegistrationServlet</servlet-class>
+</servlet>
+<servlet-mapping>
+    <servlet-name>StudentRegistrationServlet</servlet-name>
+    <url-pattern>/StudentRegistrationServlet</url-pattern>
+</servlet-mapping>
+<servlet>
+    <servlet-name>StudentLoginServlet</servlet-name>
+    <servlet-class>com.auth.StudentLoginServlet</servlet-class>
+</servlet>
+<servlet-mapping>
+    <servlet-name>StudentLoginServlet</servlet-name>
+    <url-pattern>/StudentLoginServlet</url-pattern>
+</servlet-mapping>
+<servlet>
+    <servlet-name>StudentDashboardServlet</servlet-name>
+    <servlet-class>com.student.StudentDashboardServlet</servlet-class>
+</servlet>
+<servlet-mapping>
+    <servlet-name>StudentDashboardServlet</servlet-name>
+    <url-pattern>/StudentDashboardServlet</url-pattern>
+</servlet-mapping>
+<servlet>
+    <servlet-name>AnnouncementServlet</servlet-name>
+    <servlet-class>com.student.AnnouncementServlet</servlet-class>
+</servlet>
+<servlet-mapping>
+    <servlet-name>AnnouncementServlet</servlet-name>
+    <url-pattern>/AnnouncementServlet</url-pattern>
+</servlet-mapping>
+<servlet>
+    <servlet-name>FacultyRegistrationServlet</servlet-name>
+    <servlet-class>com.registration.FacultyRegistrationServlet</servlet-class>
+</servlet>
+<servlet>
+    <servlet-name>FacultyLoginServlet</servlet-name>
+    <servlet-class>com.auth.FacultyLoginServlet</servlet-class>
+</servlet>
+<servlet>
+    <servlet-name>FacultyDashboardServlet</servlet-name>
+    <servlet-class>com.faculty.FacultyDashboardServlet</servlet-class>
+</servlet>
+<servlet>
+    <servlet-name>UploadMarksServlet</servlet-name>
+    <servlet-class>com.marks.UploadMarksServlet</servlet-class>
+</servlet>
+<servlet>
+    <servlet-name>ViewOnlineMarksServlet</servlet-name>
+    <servlet-class>com.marks.ViewOnlineMarksServlet</servlet-class>
+</servlet>
+<servlet>
+    <servlet-name>UploadOfflineMarksServlet</servlet-name>
+    <servlet-class>com.marks.UploadOfflineMarksServlet</servlet-class>
+</servlet>
+<servlet>
+    <servlet-name>ManageStudentsServlet</servlet-name>
+    <servlet-class>com.faculty.ManageStudentsServlet</servlet-class>
+</servlet>
+<servlet>
+    <servlet-name>UpdateStudentServlet</servlet-name>
+    <servlet-class>com.faculty.UpdateStudentServlet</servlet-class>
+</servlet>
+<servlet>
+    <servlet-name>ViewAllMarksServlet</servlet-name>
+    <servlet-class>com.faculty.ViewAllMarksServlet</servlet-class>
+</servlet>
+<servlet>
+    <servlet-name>PostAnnouncementServlet</servlet-name>
+    <servlet-class>com.faculty.PostAnnouncementServlet</servlet-class>
+</servlet>
+<servlet>
+    <servlet-name>LogoutServlet</servlet-name>
+    <servlet-class>com.faculty.LogoutServlet</servlet-class>
+</servlet>
+<servlet>
+    <servlet-name>AdminLoginServlet</servlet-name>
+    <servlet-class>com.auth.AdminLoginServlet</servlet-class>
+</servlet>
+<servlet>
+    <servlet-name>UpdateCourseServlet</servlet-name>
+    <servlet-class>com.course.UpdateCourseServlet</servlet-class>
+</servlet>
+<servlet>
+    <servlet-name>CourseServlet</servlet-name>
+    <servlet-class>com.course.CourseServlet</servlet-class>
+</servlet>
+<servlet>
+    <servlet-name>AddCourseServlet</servlet-name>
+    <servlet-class>com.course.AddCourseServlet</servlet-class>
+</servlet>
+<servlet>
+    <servlet-name>DeleteCourseServlet</servlet-name>
+    <servlet-class>com.course.DeleteCourseServlet</servlet-class>
+</servlet>
+<servlet>
+    <servlet-name>MarkAttendanceServlet</servlet-name>
+    <servlet-class>com.attendance.MarkAttendanceServlet</servlet-class>
+</servlet>
+<servlet>
+    <servlet-name>GetStudentsForCourseServlet</servlet-name>
+    <servlet-class>com.course.GetStudentsForCourseServlet</servlet-class>
+</servlet>
+<servlet>
+    <servlet-name>AutomaticAttendanceServlet</servlet-name>
+    <servlet-class>com.attendance.AutomaticAttendanceServlet</servlet-class>
+</servlet>
+<servlet-mapping>
+    <servlet-name>FacultyRegistrationServlet</servlet-name>
+    <url-pattern>/FacultyRegistrationServlet</url-pattern>
+</servlet-mapping>
+<servlet-mapping>
+    <servlet-name>FacultyLoginServlet</servlet-name>
+    <url-pattern>/FacultyLoginServlet</url-pattern>
+</servlet-mapping>
+<servlet-mapping>
+    <servlet-name>FacultyDashboardServlet</servlet-name>
+    <url-pattern>/FacultyDashboardServlet</url-pattern>
+</servlet-mapping>
+<servlet-mapping>
+    <servlet-name>UploadMarksServlet</servlet-name>
+    <url-pattern>/UploadMarksServlet</url-pattern>
+</servlet-mapping>
+<servlet-mapping>
+    <servlet-name>ViewOnlineMarksServlet</servlet-name>
+    <url-pattern>/ViewOnlineMarksServlet</url-pattern>
+</servlet-mapping>
+<servlet-mapping>
+    <servlet-name>UploadOfflineMarksServlet</servlet-name>
+    <url-pattern>/UploadOfflineMarksServlet</url-pattern>
+</servlet-mapping>
+<servlet-mapping>
+    <servlet-name>ManageStudentsServlet</servlet-name>
+    <url-pattern>/ManageStudentsServlet</url-pattern>
+</servlet-mapping>
+<servlet-mapping>
+    <servlet-name>UpdateStudentServlet</servlet-name>
+    <url-pattern>/UpdateStudentServlet</url-pattern>
+</servlet-mapping>
+<servlet-mapping>
+    <servlet-name>ViewAllMarksServlet</servlet-name>
+    <url-pattern>/ViewAllMarksServlet</url-pattern>
+</servlet-mapping>
+<servlet-mapping>
+    <servlet-name>PostAnnouncementServlet</servlet-name>
+    <url-pattern>/PostAnnouncementServlet</url-pattern>
+</servlet-mapping>
+<servlet-mapping>
+    <servlet-name>LogoutServlet</servlet-name>
+    <url-pattern>/LogoutServlet</url-pattern>
+</servlet-mapping>
+<servlet-mapping>
+    <servlet-name>AdminLoginServlet</servlet-name>
+    <url-pattern>/AdminLoginServlet</url-pattern>
+</servlet-mapping>
+<servlet-mapping>
+    <servlet-name>UpdateCourseServlet</servlet-name>
+    <url-pattern>/UpdateCourseServlet</url-pattern>
+</servlet-mapping>
+<servlet-mapping>
+    <servlet-name>CourseServlet</servlet-name>
+    <url-pattern>/CourseServlet</url-pattern>
+</servlet-mapping>
+<servlet-mapping>
+    <servlet-name>AddCourseServlet</servlet-name>
+    <url-pattern>/AddCourseServlet</url-pattern>
+</servlet-mapping>
+<servlet-mapping>
+    <servlet-name>DeleteCourseServlet</servlet-name>
+    <url-pattern>/DeleteCourseServlet</url-pattern>
+</servlet-mapping>
+<servlet-mapping>
+    <servlet-name>MarkAttendanceServlet</servlet-name>
+    <url-pattern>/MarkAttendanceServlet</url-pattern>
+</servlet-mapping>
+<servlet-mapping>
+    <servlet-name>GetStudentsForCourseServlet</servlet-name>
+    <url-pattern>/GetStudentsForCourseServlet</url-pattern>
+</servlet-mapping>
+<servlet-mapping>
+    <servlet-name>AutomaticAttendanceServlet</servlet-name>
+    <url-pattern>/AutomaticAttendance</url-pattern>
+</servlet-mapping>
+<welcome-file-list>
+    <welcome-file>html/index.html</welcome-file>
+</welcome-file-list>
 </web-app>
